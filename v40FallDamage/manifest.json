@@ -1,0 +1,10 @@
+{
+    "name": "v40FallDamage",
+    "version_number": "1.1.0",
+    "website_url": "https://thunderstore.io/c/lethal-company/p/Confusified/v40FallDamage/",
+    "description": "This mod changes the fall damage to what it was in v40",
+    "dependencies": [
+        "BepInEx-BepInExPack-5.4.2100",
+	"NotAtomicBomb-TerminalApi-1.4.0"
+    ]
+}
