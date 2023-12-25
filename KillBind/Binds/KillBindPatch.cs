@@ -12,7 +12,7 @@ namespace KillBind.Binds
         [HarmonyPrefix]
         private static void onPressKill(PlayerControllerB __instance)
         {
-            if (BasePlugin.ModEnabled.Value && BasePlugin.InputActionInstance.ExplodeKey.triggered && !__instance.isPlayerDead && !__instance.isTypingChat && !HUDManager.Instance.typingIndicator.enabled && (!UnityEngine.Object.FindObjectOfType<Terminal>().terminalInUse && !__instance.inTerminalMenu))
+            if (BasePlugin.ModEnabled.Value && BasePlugin.InputActionInstance.ExplodeKey.triggered && !__instance.isPlayerDead && !__instance.isTypingChat && !HUDManager.Instance.typingIndicator.enabled && (!UnityEngine.Object.FindObjectOfType<Terminal>().terminalInUse && !__instance.inTerminalMenu) && __instance == GameNetworkManager.Instance.localPlayerController)
             {
                 __instance.KillPlayer(Vector3.zero, spawnBody: true, CauseOfDeath.Unknown, 1);
             }
