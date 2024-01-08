@@ -8,7 +8,7 @@ namespace KillBindNS
 {
     public class KillBind : LcInputActions
     {
-        [InputAction("<Keyboard>/k", Name = "Explode Head", GamepadPath = "<Gamepad>/Button North", ActionType = InputActionType.Button)]
+        [InputAction("<Keyboard>/k", Name = "Suicide", GamepadPath = "<Gamepad>/Button North", ActionType = InputActionType.Button)]
         public InputAction ExplodeKey { get; set; }
     }
 
@@ -20,14 +20,14 @@ namespace KillBindNS
         //Mod Defining Vars
         private const string modGUID = "Confusified.KillBind";
         private const string modName = "Kill Bind";
-        private const string modVersion = "1.1.0";
+        private const string modVersion = "1.1.1";
         private readonly Harmony _harmony = new Harmony(modGUID);
 
         //Mod Config Vars
         public ConfigFile Configuration = new ConfigFile(Utility.CombinePaths(Paths.ConfigPath + "\\Confusified\\", $"{modGUID.Substring(12)}.cfg"), false);
         public static ConfigEntry<bool> ModEnabled;
         public static ConfigEntry<int> DeathCause;
-        public static ConfigEntry<bool> BlowHeadOff;
+        public static ConfigEntry<int> HeadType;
 
         //Mod Non-Config Vars
         internal static KillBind InputActionInstance = new KillBind();
@@ -37,7 +37,7 @@ namespace KillBindNS
         {
             SetModConfig();
             _harmony.PatchAll();
-            Logger.LogInfo($"{modName} {modVersion} has loaded");
+            Logger.LogInfo($"{modName} {modVersion} has loaded succesfully");
         }
 
         private void SetModConfig()
@@ -48,7 +48,12 @@ namespace KillBindNS
                 "(0) Unknown (Default)\n(1) Bludgeoning\n(2) Gravity\n(3) Blast\n(4) Strangulation\n(5) Suffocation\n(6) Mauling\n(7) Gunshots\n(8) Crushing\n(9) Drowning\n(10) Abandoned\n(11) Electrocution\n(12) Kicking" +
                 "\n\nDeath types (1)Bludgeoning, (6)Mauling and (7)Gunshots will cover the body with blood."
                 );
-            BlowHeadOff = Configuration.Bind<bool>("Mod Settings", "BlowHeadOff", true, "Blow off your head when pressing your kill bind");
+            HeadType = Configuration.Bind<int>("Mod Settings", "HeadType", 1, "Decide what will happen with your head.\n" +
+                "There are currently 3 head types in the game:\n" +
+                "(0) Default - Your head will stay on your body\n" +
+                "(1) Decapitate (Default) - Your head will be blown off of your body\n" +
+                "(2) Coilhead - Your head will be replaced with a coil"
+                );
         }
     }
 }
