@@ -15,12 +15,10 @@ namespace KillBind.Binds
         {
             if (BasePlugin.ModEnabled.Value && BasePlugin.InputActionInstance.ExplodeKey.triggered && !__instance.isPlayerDead && !__instance.isTypingChat && !HUDManager.Instance.typingIndicator.enabled && (!UnityEngine.Object.FindObjectOfType<Terminal>().terminalInUse && !__instance.inTerminalMenu) && __instance == GameNetworkManager.Instance.localPlayerController)
             {
-                if (BasePlugin.DeathCause.Value > Enum.GetValues(typeof(CauseOfDeath)).Length) { BasePlugin.DeathCause.Value = 0; }
+                if (BasePlugin.DeathCause.Value > Enum.GetValues(typeof(CauseOfDeath)).Length || BasePlugin.DeathCause.Value < 0) { BasePlugin.DeathCause.Value = 0; } //If your choice is invalid, set to default (unknown death cause)
+                if (BasePlugin.HeadType.Value > 3 || BasePlugin.HeadType.Value < 0) { BasePlugin.HeadType.Value = 1; } //If your choice is invalid, set to default (explode head)
 
-                int BlowHeadOff = 0;
-                if (BasePlugin.BlowHeadOff.Value) { BlowHeadOff = 1; } else { BlowHeadOff = 0; }
-
-                __instance.KillPlayer(Vector3.zero, spawnBody: true, (CauseOfDeath)BasePlugin.DeathCause.Value, BlowHeadOff);
+                __instance.KillPlayer(Vector3.zero, true, (CauseOfDeath)BasePlugin.DeathCause.Value, BasePlugin.HeadType.Value);
             }
         }
     }
